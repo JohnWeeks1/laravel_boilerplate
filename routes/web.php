@@ -11,14 +11,12 @@
 |
 */
 
-Route::get('/', function () {
-    return view('welcome');
+Auth::routes();
+
+Route::get('/', 'HomeController@index');
+
+Route::get('/logout', 'Auth\LoginController@logout');
+
+Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
+    Route::get('/', 'DashboardController@index');
 });
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');
-
-Auth::routes();
-
-Route::get('/home', 'HomeController@index')->name('home');

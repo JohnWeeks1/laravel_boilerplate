@@ -1,11 +1,7 @@
-@extends('adminlte::page')
+@extends('layouts.app')
 
-@section('title', 'AdminLTE')
-
-@section('content_header')
-    <h1>Dashboard</h1>
-@stop
+@section('title', 'L Boilerplate')
 
 @section('content')
-    <p>You are logged in!</p>
-@stop
+    <p>This is my body content.</p>
+@endsection
