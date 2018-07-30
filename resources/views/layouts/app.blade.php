@@ -42,7 +42,7 @@
                         <div class="navbar-nav">
                             <li class="nav-item dropdown">
                                 <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                    {{ Auth::user()->name }}
+                                    {{ Auth::check() ? Auth::user()->name : "Sign In" }}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown04">
                                     @if(!Auth::check())

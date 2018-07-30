@@ -1,11 +1,15 @@
 @extends('adminlte::page')
 
-@section('title', 'AdminLTE')
+@section('title', 'Dashboard')
 
 @section('content_header')
-    <h1>Dashboard</h1>
+    <div class="container">
+        <h3>Dashboard</h3>
+    </div>
 @stop
 
 @section('content')
-    <p>You are logged in!</p>
+    <div class="container">
+        <p>You are logged in!</p>
+    </div>
 @stop
