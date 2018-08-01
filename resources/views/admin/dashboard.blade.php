@@ -2,6 +2,8 @@
 
 @section('title', 'Dashboard')
 
+@include('admin.includes.scripts')
+
 @section('content_header')
     <div class="container">
         <h3>Dashboard</h3>
