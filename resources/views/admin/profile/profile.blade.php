@@ -11,7 +11,7 @@
 @stop
 
 @section('content')
-    <div class="container">
+    <div class="container-fluid bg-light py-3 jumbotron">
         <form method="post" enctype="multipart/form-data" action="#">
             <div class="col-md-offset-2 col-md-8">
                 <div class="form-group">

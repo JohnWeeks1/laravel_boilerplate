@@ -19,7 +19,10 @@ Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
 
+    Route::resource('/events', 'EventController');
+
     Route::get('/', 'DashboardController@index');
 
     Route::get('/profile', 'UserController@index');
+
 });

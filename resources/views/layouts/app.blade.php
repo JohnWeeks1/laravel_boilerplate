@@ -23,7 +23,7 @@
 <body>
     <div id="app">
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark">
+        <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="padding:20px;">
             <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">Laravel Boilerplate</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
