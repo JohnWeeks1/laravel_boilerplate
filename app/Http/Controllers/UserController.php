@@ -3,7 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Input;
 use App\User;
+use App\Event;
+use Image;
 use Auth;
 
 class UserController extends Controller
@@ -21,7 +24,9 @@ class UserController extends Controller
         return view('admin.profile.profile', [
             'user' => $user
         ]);
+        
     }
+
 
     /**
      * Update the specified resource in storage.
@@ -32,7 +37,31 @@ class UserController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'name' => 'required|max:255',
+            'email' => 'required',
+        ]);
+
+        $image_data = $request->get('image-data');
+        $info = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $image_data));
+
+        $user = User::find($id);
+        $user->name = $request['name'];
+        $user->email = $request['email'];
+
+        if(!empty($info)) {
+            $filename = time().'.png';
+            $path = 'images/profile_pics/'.$filename;
+            $profile_pic = Image::make($info);
+            $profile_pic->save($path);
+
+            $user->path = $path;
+            $user->update();
+        }
+
+        $user->update();
+
+        return redirect('admin/profile')->with('success', 'You just updated a your profile');
     }
 
     /**

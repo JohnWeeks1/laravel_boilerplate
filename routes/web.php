@@ -21,8 +21,12 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
 
     Route::resource('/events', 'EventController');
 
+    Route::resource('/profile', 'UserController');
+
     Route::get('/', 'DashboardController@index');
 
-    Route::get('/profile', 'UserController@index');
+    // Route::get('/profile', 'UserController@index');
+
+    // Route::post('/profile/{id}', 'UserController@update');
 
 });

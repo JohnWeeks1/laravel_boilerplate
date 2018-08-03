@@ -14,7 +14,7 @@
 
 @section('content')
     <div class="container-fluid py-3 jumbotron">
-            @if(session()->has('message'))
+            @if(session()->has('success'))
                 <div class="alert alert-success">
                     {{ session()->get('success') }}
                 </div>

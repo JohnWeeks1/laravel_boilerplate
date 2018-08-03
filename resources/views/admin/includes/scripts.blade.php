@@ -15,43 +15,47 @@ Profile Section
 
 /* image crop */
 
-.image-editor {
-   text-align: center;
-}
-
 .cropit-preview {
   background-color: #f8f8f8;
   background-size: cover;
-  border: 5px solid #ccc;
+  border: 1px solid #ccc;
   border-radius: 3px;
   margin-top: 7px;
   width: 250px;
   height: 250px;
-   display: inline-block;
 }
 
 .cropit-preview-image-container {
   cursor: move;
 }
 
-.cropit-preview-background {
-  opacity: .2;
-  cursor: auto;
+.cropit-image-zoom-input {
+  width: 250px !important;
 }
 
 .image-size-label {
   margin-top: 10px;
 }
 
-input, .export {
-  /* Use relative position to prevent from being covered by image background */
-  position: relative;
-  z-index: 10;
+input {
   display: block;
 }
 
-button {
+button[type="submit"] {
   margin-top: 10px;
+}
+
+#result {
+  margin-top: 10px;
+  width: 900px;
+}
+
+#result-data {
+  display: block;
+  overflow: hidden;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  word-wrap: break-word;
 }
 /* image crop END*/
 </style>
@@ -61,16 +65,29 @@ button {
 {{-- #############################################
 Profile Section
 ############################################# --}}
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
+<script src="../js/cropit.js"></script>
 
-{{-- image crop --}}
-<script src="https://cdnjs.cloudflare.com/ajax/libs/cropit/0.5.1/jquery.cropit.js"></script>
 <script>
-    $('#image-cropper').cropit();
+      $(function() {
 
-    // When user clicks select image button,
-    // open select file dialog programmatically
-    $('.select-image-btn').click(function() {
-      $('.cropit-image-input').click();
-    });
+        // image crop
+        $('.image-editor').cropit();
+
+        $('form').submit(function() {
+          // Move cropped image data to hidden input
+          var imageData = $('.image-editor').cropit('export');
+          $('.hidden-image-data').val(imageData);
+
+          // Print HTTP request params
+          var formValue = $(this).serialize();
+          $('#result-data').text(formValue);
+
+          // Prevent the form from actually submitting
+          // return false;
+        });
+        // image crop END
+        
+      });
 </script>
 @stop
