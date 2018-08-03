@@ -72,7 +72,7 @@ Profile Section
       $(function() {
 
         // image crop
-        $('.image-editor').cropit();
+        $('.image-editor').cropit({ smallImage: 'allow' });
 
         $('form').submit(function() {
           // Move cropped image data to hidden input

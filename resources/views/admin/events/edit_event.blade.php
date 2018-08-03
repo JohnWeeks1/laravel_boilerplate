@@ -23,9 +23,9 @@
                 </ul>
             </div>
         @endif
-            {!! Form::open(['method' => 'POST', 'action' => ['EventController@update', $event->id]]) !!}
+            {!! Form::open(['method' => 'POST', 'files' => true, 'action' => ['EventController@update', $event->id]]) !!}
                 @csrf
-                {{ method_field('PUT') }}
+                {{ method_field('PATCH') }}
                 <div class="controls">
                     <div class="row">
                         <div class="col-sm-12">
@@ -36,21 +36,21 @@
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="form_message">Description</label>
+                                <label for="description">Description</label>
                                 <textarea id="description" name="description" class="form-control" placeholder="Pleae enter the description for you event" rows="4">{{$event->description}}</textarea>
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="form_message">Current Image</label>
+                                <label for="">Current Image</label>
                                 <br>
-                                <img class="img-responsive" src="{{ asset("$event->path") }}" alt="" style="width:400px;">
+                                <img class="img-responsive" src="{{ asset("images/events/$event->path") }}" alt="" style="width:400px;">
                             </div>
                         </div>
                         <div class="col-md-12">
                             <div class="form-group">
-                                <label for="form_message">New Image</label>
-                                <input type="file">
+                                <label for="image">New Image</label>
+                                <input type="file" name="image">
                                 <span>If you would like to update your image, please pick a new one.</span>
                             </div>
                         </div>

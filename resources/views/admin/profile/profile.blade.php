@@ -45,7 +45,7 @@
                 <div class="form-group">
                     <label for="">Current Image</label> <br>
                     @if(!empty($user->path))
-                        <img src="{{ asset("$user->path")}}" alt="">
+                        <img src="{{ asset("images/profile_pics/$user->path")}}" alt="">
                     @else
                         <p>You haven't uploaded an image yet.</p>
                     @endif

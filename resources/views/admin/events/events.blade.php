@@ -56,7 +56,7 @@
                         <td>{{$event->name}}</td>
                         <td>{{$event->description}}</td>
                         <td>
-                            <img src="{{ asset("$event->path") }}" alt="" style="height:50px;">
+                            <img src="{{ asset("images/events/$event->path") }}" alt="" style="height:50px;">
                         </td>
                         <td>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['events.destroy', $event->id]]) !!}

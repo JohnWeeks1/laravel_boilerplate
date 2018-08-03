@@ -50,12 +50,18 @@ class UserController extends Controller
         $user->email = $request['email'];
 
         if(!empty($info)) {
+            if(!empty($user->path)) {
+                $file_path = "images/profile_pics/$user->path";
+                unlink($file_path);
+            }
+
             $filename = time().'.png';
             $path = 'images/profile_pics/'.$filename;
+
             $profile_pic = Image::make($info);
             $profile_pic->save($path);
 
-            $user->path = $path;
+            $user->path = $filename;
             $user->update();
         }
 

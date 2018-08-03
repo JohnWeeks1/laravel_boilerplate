@@ -55,16 +55,16 @@ class EventController extends Controller
         $event->description = $request['description'];
 
         if($request->hasFile('image')) {
+            
             $image = $request->file('image');
             $filename = time().'.'.$image->getClientOriginalExtension();
             
             $path = 'images/events/'.$filename;
-            Image::make($image->getRealPath())->resize(468, 249)->save($path);
+            Image::make($image->getRealPath())->save($path);
 
-            $event->path = $path;
+            $event->path = $filename;
             $event->save();
         }
-        
 
         return redirect('admin/events')->with('success', 'You just created a new event');
     }
@@ -109,10 +109,29 @@ class EventController extends Controller
         ]);
 
         $event = Event::findOrFail($id);
-        $data = $request->all();
-        $event->update($data);
+        $event->name = $request['name'];
+        $event->description = $request['description'];
 
-        return redirect('admin/events')->with('success', 'You just update the event called' . $request['name'] . '');
+        if ($request->hasFile('image')) {
+
+            if(!empty($user->path)) {
+                $file_path = "images/events/$user->path";
+                unlink($file_path);
+            }
+
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            
+            $path = 'images/events/'.$filename;
+            Image::make($image->getRealPath())->save($path);
+
+            $event->path = $filename;
+            $event->update();
+            
+        }
+        $event->update();
+
+        return redirect('admin/events')->with('success', 'You just update the event called ' . $request['name'] . '');
     }
 
     /**
