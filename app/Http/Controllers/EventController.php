@@ -3,9 +3,11 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Location;
 use App\Event;
 use App\User;
 use Auth;
+use DB;
 use Image;
 
 class EventController extends Controller
@@ -64,7 +66,23 @@ class EventController extends Controller
 
             $event->path = $filename;
             $event->save();
+            $event_id = DB::getPdo()->lastInsertId();
         }
+
+        $location = new Location;
+
+        $address = $request['address'];
+        $prepAddr = str_replace(' ','+',$address);
+        $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+        $output= json_decode($geocode);
+
+        
+        $location->event_id = $event_id;
+        $location->address = $address;
+        $location->lng = $output->results[0]->geometry->location->lng;
+        $location->lat = $output->results[0]->geometry->location->lat;
+
+        $location->save();
 
         return redirect('admin/events')->with('success', 'You just created a new event');
     }
@@ -146,5 +164,21 @@ class EventController extends Controller
         $event->delete();
 
         return redirect('admin/events')->with('success', 'You just deleted an event'); 
+    }
+
+    public function events()
+    {
+        $events = Event::all();
+        return view('events.events', [
+            'events' => $events
+        ]); 
+    }
+
+    public function event_by_id($id)
+    {
+        $event = Event::find($id);
+        return view('events.event_by_id', [
+            'event' => $event
+        ]); 
     }
 }

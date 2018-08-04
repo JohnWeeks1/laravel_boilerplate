@@ -55,7 +55,7 @@
                             </div>
                         </div>
                         <div class="col-md-12">
-                            {!! Form::submit('Create Event', ['class' => 'btn btn-primary btn']) !!}
+                            {!! Form::submit('Update Event', ['class' => 'btn btn-primary btn']) !!}
                         </div>
                     </div>
                 </div>

@@ -32,12 +32,12 @@
                 
                     <div class="collapse navbar-collapse" id="navbarsExample04">
                         <ul class="navbar-nav mr-auto">
-                        <li class="nav-item active">
-                            <a class="nav-link" href="/">Home <span class="sr-only">(current)</span></a>
+                        <li class="nav-item">
+                            <a class="nav-link @if(Request::url() === url('/')) active @endif" href="{{ url('/') }}">Home</a>
                         </li>
-                        {{-- <li class="nav-item">
-                            <a class="nav-link" href="#">Link</a>
-                        </li> --}}
+                        <li class="nav-item">
+                            <a class="nav-link @if(Request::url() === url('/events')) active @endif" href="{{ url('/events') }}">Events</a>
+                        </li>
                         </ul>
                         <div class="navbar-nav">
                             <li class="nav-item dropdown">

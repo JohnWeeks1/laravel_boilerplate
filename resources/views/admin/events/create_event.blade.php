@@ -25,7 +25,6 @@
         @endif
         {!! Form::open(['method' => 'POST', 'files' => true, 'route' => ['events.store']]) !!}
             @csrf
-            <div class="controls">
                 <div class="row">
                     <div class="col-sm-12">
                         <div class="form-group">
@@ -40,16 +39,26 @@
                         </div>
                     </div>
                     <div class="col-md-12">
+                        <div class="form-group">
+                            <label for="image">Image</label>
+                            <input type="file" name="image">
+                        </div>
+                    </div>
+                        <div class="col-md-12">
                             <div class="form-group">
-                                <label for="image">Image</label>
-                                <input type="file" name="image">
+                                <input id="pac-input" class="controls" type="text" placeholder="Enter a location" name="address">
+                                <div id="map"></div>
+                                <div id="infowindow-content">
+                                    <span id="place-name"  class="title"></span><br>
+                                    Place ID <span id="place-id"></span><br>
+                                    <span id="place-address"></span>
+                                </div>
                             </div>
                         </div>
                     <div class="col-md-12">
                         {!! Form::submit('Create Event', ['class' => 'btn btn-primary btn']) !!}
                     </div>
                 </div>
-            </div>
         {!! Form::close() !!}
     </div>
 @stop

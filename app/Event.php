@@ -9,4 +9,14 @@ class Event extends Model
     protected $fillable = [
         'name', 'description', 'image',
     ];
+
+    public function location()
+    {
+        return $this->hasOne('App\Location');
+    }
+
+    public function user()
+    {
+        return $this->hasOne('App\User', 'id', 'user_id');
+    }
 }

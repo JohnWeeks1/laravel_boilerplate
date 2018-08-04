@@ -45,6 +45,7 @@
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Location</th>
                     <th>Description</th>
                     <th>Image</th>
                     <th>Options</th>
@@ -54,14 +55,17 @@
                 @foreach($events as $event)    
                     <tr>
                         <td>{{$event->name}}</td>
-                        <td>{{$event->description}}</td>
+                        <td>{{$event->location->address}}</td>
+                        <td>{{substr("$event->description",0,70)}}...</td>
                         <td>
                             <img src="{{ asset("images/events/$event->path") }}" alt="" style="height:50px;">
                         </td>
                         <td>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['events.destroy', $event->id]]) !!}
-                                <a href="{{ url('admin/events/' . $event->id . '/edit') }}" class="btn btn-warning btn-sm">Edit</a>
-                                {!! Form::submit('Delete', ['class' => 'btn btn-danger btn-sm']) !!}
+                                <a href="{{ url('admin/events/' . $event->id . '/edit') }}" class="btn btn-warning" style="margin-top:10px;">
+                                    <i class="fa fa-pencil" aria-hidden="true"></i>
+                                </a>                    
+                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit','class' => 'btn btn-danger']) !!}
                             {!! Form::close() !!}
                         </td>
                     </tr>

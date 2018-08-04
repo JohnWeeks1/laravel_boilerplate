@@ -15,6 +15,10 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
+Route::get('/events', 'EventController@events');
+
+Route::get('/event/{id}', 'EventController@event_by_id');
+
 Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
