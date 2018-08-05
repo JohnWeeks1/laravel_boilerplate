@@ -24,5 +24,8 @@
             @endforeach
                 </div>
         </div>
+        <div class="center_paginate">
+            {{ $events->links() }}
+        </div>
     </div>
 @endsection

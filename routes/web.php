@@ -19,6 +19,8 @@ Route::get('/events', 'EventController@events');
 
 Route::get('/event/{id}', 'EventController@event_by_id');
 
+Route::resource('/comments', 'EventController');
+
 Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){

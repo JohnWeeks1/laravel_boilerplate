@@ -7,3 +7,15 @@
 
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
+
+.container{
+    .center_paginate{
+        display: flex;
+        justify-content:center;
+    }
+    .row{
+        #comments{
+            padding-top: 20px;
+        }
+    }
+}
