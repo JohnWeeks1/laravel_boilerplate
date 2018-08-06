@@ -43,7 +43,7 @@
                             <h3 class="mb-2">Comments</h3>
                             <div class="row pt-2">
                                 <div class="col-12">
-                                    <form action="{{ route('comments.create')}}" method="POST">
+                                    <form action="{{ url('/create_comment')}}" method="POST">
                                         @csrf
                                         <div class="form-group">
                                             <label for="comment">Comment:</label>
@@ -56,21 +56,25 @@
                             </div>
                             <!-- comment -->
                             <br>
-                            <div class="comment mb-2 row">
-                                <div class="comment-avatar col-md-1 col-sm-2 col-xs-3 text-center pr-1">
-                                    <a href=""><img class="mx-auto rounded-circle img-fluid" src="http://demos.themes.guide/bodeo/assets/images/users/m103.jpg" alt="avatar"></a>
-                                </div>
-                                <div class="comment-content col-md-11 col-sm-10 col-xs-9">
-                                    <h6 class="small comment-meta"><a href="#">admin</a> Today, 2:38</h6>
-                                    <div class="comment-body">
-                                        <p>
-                                            Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod <a href>http://wwwwww.com</a> tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo.
-                                            <br>
-                                            <a href="" class="text-right small"><i class="ion-reply"></i> Reply</a>
-                                        </p>
+                            
+                                <div class="comment mb-2 row">
+                                        @foreach($comments as $comment)
+                                    <div class="comment-avatar col-md-1 col-sm-2 col-xs-3 text-center pr-1">
+                                        <a href=""><img class="mx-auto rounded-circle img-fluid" src="/images/profile_pics/{{ $comment->user->path }}" alt="avatar"></a>
                                     </div>
+                                    <div class="comment-content col-md-11 col-sm-10 col-xs-9">
+                                    <h6 class="small comment-meta"><a href="#">admin</a>{{ $comment->created_at }}</h6>
+                                        <div class="comment-body">
+                                            <p>
+                                                {{ $comment->comment }}
+                                                <br>
+                                                <a href="" class="text-right small"><i class="ion-reply"></i> Reply</a>
+                                            </p>
+                                        </div>
+                                    </div>
+                                    @endforeach
                                 </div>
-                            </div>
+                            
                             <!-- /comment -->
                         </div>
                     </div>

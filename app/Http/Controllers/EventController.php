@@ -4,6 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Location;
+use App\Comment;
 use App\Event;
 use App\User;
 use Auth;
@@ -177,8 +178,26 @@ class EventController extends Controller
     public function event_by_id($id)
     {
         $event = Event::find($id);
+        $comments = Comment::where('event_id', $id)->get();
         return view('events.event_by_id', [
-            'event' => $event
-        ]); 
+            'event' => $event,
+            'comments' => $comments
+        ]);
+    }
+    
+    public function add_comment(Request $request)
+    {
+        $request->validate([
+            'comment' => 'required',
+        ]);
+
+        $comment = new Comment;
+        
+        $comment->user_id = Auth::user()->id;
+        $comment->event_id = $request['event_id'];
+        $comment->comment = $request['comment'];
+        $comment->save();
+
+        return redirect('admin/events')->with('success', 'You just created a new COMMENT');
     }
 }

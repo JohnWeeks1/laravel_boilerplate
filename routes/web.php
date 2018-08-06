@@ -19,7 +19,7 @@ Route::get('/events', 'EventController@events');
 
 Route::get('/event/{id}', 'EventController@event_by_id');
 
-Route::resource('/comments', 'EventController');
+Route::post('/create_comment', 'EventController@add_comment');
 
 Route::get('/logout', 'Auth\LoginController@logout');
 
