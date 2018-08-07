@@ -148,7 +148,21 @@ class EventController extends Controller
             $event->update();
             
         }
-        $event->update();
+
+        if(!empty($request['address'])) {
+            $location = Location::where('event_id', $id);
+
+            $address = $request['address'];
+            $prepAddr = str_replace(' ','+',$address);
+            $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
+            $output= json_decode($geocode);
+
+            $location->update([ 
+                'address' => $address,
+                'lng' => $output->results[0]->geometry->location->lng,
+                'lat' => $output->results[0]->geometry->location->lat
+            ]);
+        }
 
         return redirect('admin/events')->with('success', 'You just update the event called ' . $request['name'] . '');
     }
@@ -184,20 +198,5 @@ class EventController extends Controller
             'comments' => $comments
         ]);
     }
-    
-    public function add_comment(Request $request)
-    {
-        $request->validate([
-            'comment' => 'required',
-        ]);
-
-        $comment = new Comment;
-        
-        $comment->user_id = Auth::user()->id;
-        $comment->event_id = $request['event_id'];
-        $comment->comment = $request['comment'];
-        $comment->save();
-
-        return redirect('admin/events')->with('success', 'You just created a new COMMENT');
-    }
+       
 }

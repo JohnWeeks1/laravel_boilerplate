@@ -24,4 +24,9 @@ class Event extends Model
     {
         return $this->hasMany('App\Comment');
     }
+
+    public function attending()
+    {
+        return $this->hasMany('App\Attend', 'event_id', 'id');
+    }
 }

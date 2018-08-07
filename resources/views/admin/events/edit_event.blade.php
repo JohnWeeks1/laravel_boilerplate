@@ -54,6 +54,20 @@
                         </div>
                     </div>
                     <div class="col-md-12">
+                        <div class="alert alert-info">
+                            Current Location: {{ $event->location->address }}
+                        </div>
+                        <div class="form-group">
+                            <input id="pac-input" class="controls" type="text" placeholder="Enter a location" name="address">
+                            <div id="map"></div>
+                            <div id="infowindow-content">
+                                <span id="place-name"  class="title"></span><br>
+                                Place ID <span id="place-id"></span><br>
+                                <span id="place-address"></span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
                         {!! Form::submit('Update Event', ['class' => 'btn btn-primary btn']) !!}
                     </div>
                 </div>
