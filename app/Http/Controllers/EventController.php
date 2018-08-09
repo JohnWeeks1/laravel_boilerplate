@@ -5,6 +5,7 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Location;
 use App\Comment;
+use App\Attend;
 use App\Event;
 use App\User;
 use Auth;
@@ -66,25 +67,21 @@ class EventController extends Controller
             Image::make($image->getRealPath())->save($path);
 
             $event->path = $filename;
-            $event->save();
-            $event_id = DB::getPdo()->lastInsertId();
+            //$event->save();
+            //$event_id = DB::getPdo()->lastInsertId();
         }
 
         $location = new Location;
 
         $address = $request['address'];
-        $prepAddr = str_replace(' ','+',$address);
-        $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
-        $output= json_decode($geocode);
-
-        
+        $data = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($address)."&key=AIzaSyANuAIIUIUFhpjtmBIcoTvQkUVTfPux2iU");
+        dd($data);
         $location->event_id = $event_id;
         $location->address = $address;
-        $location->lng = $output->results[0]->geometry->location->lng;
-        $location->lat = $output->results[0]->geometry->location->lat;
-
+        $location->lng = json_decode($data)->results[0]->geometry->location->lng;
+        $location->lat = json_decode($data)->results[0]->geometry->location->lat;
+        dd($location->lat);
         $location->save();
-
         return redirect('admin/events')->with('success', 'You just created a new event');
     }
 
@@ -192,9 +189,11 @@ class EventController extends Controller
     public function event_by_id($id)
     {
         $event = Event::find($id);
+        $attending = Attend::where('event_id', $id)->count();
         $comments = Comment::where('event_id', $id)->get();
         return view('events.event_by_id', [
             'event' => $event,
+            'attending' => $attending,
             'comments' => $comments
         ]);
     }

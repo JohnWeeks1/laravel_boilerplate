@@ -23,7 +23,7 @@ Route::resource('/comments', 'CommentController');
 
 Route::resource('/attend', 'AttendController');
 
-Route::put('/logout', 'Auth\LoginController@logout');
+Route::get('/logout', 'Auth\LoginController@logout');
 
 Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
 

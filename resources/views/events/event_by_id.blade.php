@@ -2,6 +2,8 @@
 
 @section('title', 'Events')
 
+<link rel="stylesheet" href="{{ asset('css/map.css') }}">
+
 @section('content')
     <div class="container">
         <div class="jumbotron">
@@ -34,55 +36,106 @@
                         <span class="float-left"> <b>Location:</b> {{$event->location->address}}</span>
                         <br><br>
 
-
-                        {!! Form::open(['method' => 'POST', 'route' => ['attend.store']]) !!}
-                            @csrf
-                            {{ method_field('POST') }}
-                            <input type="hidden" name="event_id" value="{{ $event->id }}">
-                            <input type="hidden" name="attending" value="1">
-                            @if(empty($event->attend->attending))
-                                <button type="submit" class="btn btn-sm btn-primary">Attend</button>
+                        @if(Auth::check())
+                            @if(!$event->attending)
+                                {!! Form::open(['method' => 'POST', 'route' => ['attend.store']]) !!}
+                                {{ method_field('POST') }}
+                                    <input type="hidden" name="event_id" value="{{ $event->id }}">
+                                    <input type="hidden" name="attending" value="1">
+                                    <button type="submit" class="btn btn-sm btn-primary">Attend</button>
+                            @else
+                                {{Form::open(['method'  => 'DELETE', 'route' => ['attend.destroy', $event->attending->id]])}}
+                                    <button type="submit" class="btn btn-sm btn-warning">Don't Attend</button>
                             @endif
-                            <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal{{ $event->id }}">Map</button>
-                        {!! Form::close() !!}
+                                @csrf
+                                <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal{{ $event->id }}">Map</button>
+                                <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#attending">See Attending {{$attending}}</button>
+                            {!! Form::close() !!}
+                        @endif
 
 
-                        {{-- {!! Form::open(['method' => 'DELETE', 'route' => ['attend.destroy', $event->attending->id]]) !!}
-                            @if(!empty($event->attend->attending))
-                                <button type="submit" class="btn btn-sm btn-primary">Don't Attend</button>
-                            @endif
-                        {!! Form::close() !!} --}}
+                        {{-- List of people attending this event --}}
+                        @component('components.model_basic')
+                            @slot('name')
+                                attending
+                            @endslot
+                            @slot('header')
+                                Attending
+                            @endslot
+                            @slot('body')
+                                @foreach($event->users_attend as $user_attend)
+                                    {{$user_attend->name}}
+                                @endforeach
+                            @endslot
+                        @endcomponent
+                        {{-- List of people attending this event END--}}
 
 
+                        {{-- Map for event --}}
                         @component('components.model')
                             @slot('id')
                                 {{ $event->id }}
                             @endslot
                             @slot('header')
-                                Map
+                                <a target="_blank" href="https://www.google.com/maps/?q={{$event->location->lat}},{{$event->location->lng}}">View in google maps</a>
                             @endslot
                             @slot('body')
-                                Map Body
+                              <style>
+                                  /* Always set the map height explicitly to define the size of the div
+                                   * element that contains the map. */
+                                  #map {
+                                    height: 400px;
+                                    width: 100%
+                                  }
+                                </style>
+                                <div id="map"></div>
+                                <script>
+                                    var lng = '<?php echo $event->location->lng; ?>';
+                                    var lat = '<?php echo $event->location->lat; ?>';
+                                    var $address = '<?php echo $event->location->address; ?>';
+                                    lat = Number(lat);
+                                    lng = Number(lng);
+                                  function initMap() {
+                                    var myLatLng = {lat:lat, lng:lng};
+                            
+                                    var map = new google.maps.Map(document.getElementById('map'), {
+                                      zoom: 10,
+                                      center: myLatLng
+                                    });
+                            
+                                    var marker = new google.maps.Marker({
+                                      position: myLatLng,
+                                      map: map,
+                                      title: ""+$address
+                                    });
+                                  }
+                                </script>
+                                <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyACKJBGE39ESFPS3fCDiY7hH9MdPfIf6CA&callback=initMap">
+                                </script>
+
                             @endslot
                             @slot('id')
                                 {{ $event->id }}
                             @endslot
                         @endcomponent
+                        {{-- Map for event END--}}
                     </div>
                 </div>
                 <div class="comments col-md-12" id="comments">
                     <h3 class="mb-2">Comments</h3>
                     <div class="row pt-2">
                         <div class="col-12">
+                            @if(Auth::check())
                                 {!! Form::open(['method' => 'POST', 'files' => true, 'route' => ['comments.store']]) !!}
-                                @csrf
-                                <div class="form-group">
-                                    <label for="comment">Comment:</label>
-                                    <textarea class="form-control" rows="3" name="comment"></textarea>
-                                    <input type="hidden" name="event_id" value="{{ $event->id }}">
-                                </div>
-                                <button type="submit" class="btn btn-sm btn-primary float-right">Post Comment</a>
-                            </form>
+                                    @csrf
+                                    <div class="form-group">
+                                        <label for="comment">Comment:</label>
+                                        <textarea class="form-control" rows="3" name="comment"></textarea>
+                                        <input type="hidden" name="event_id" value="{{ $event->id }}">
+                                    </div>
+                                    <button type="submit" class="btn btn-sm btn-primary float-right">Post Comment</a>
+                                </form>
+                            @endif
                         </div>
                     </div>
                     <!-- comment -->
@@ -98,15 +151,19 @@
                                     <p>
                                         {{ $comment->comment }}
                                         <br>
-                                        @if($comment->user_id == Auth::user()->id)
-                                            
-                                            {!! Form::open(['method' => 'DELETE', 'route' => ['comments.destroy', $comment->id]]) !!}
-                                                <a href="" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#myModal{{ $comment->id }}">Edit</a>                    
-                                                <button type="submit" class="btn btn-sm btn-danger">Delete</button>
-                                            {!! Form::close() !!}
+                                        @if(Auth::check())
+                                            @if($comment->user_id == Auth::user()->id)
+                                                {!! Form::open(['method' => 'DELETE', 'route' => ['comments.destroy', $comment->id]]) !!}
+                                                    <a href="" class="btn btn-sm btn-warning" data-toggle="modal" data-target="#myModal{{ $comment->id }}">Edit</a>                    
+                                                    <button type="submit" class="btn btn-sm btn-danger">Delete</button>
+                                                {!! Form::close() !!}
+                                            @else
+                                                <br>
+                                            @endif
                                         @else
                                             <br>
                                         @endif
+                                        {{-- Comment update --}}
                                         @component('components.model')
                                             @slot('id')
                                                 {{ $comment->id }}
@@ -115,7 +172,6 @@
                                                 Edit Comment
                                             @endslot
                                             @slot('body')
-                                            {{$comment->id}}
                                             {!! Form::open(['method' => 'POST', 'action' => ['CommentController@update', $comment->id]]) !!}
                                                     @csrf
                                                     {{ method_field('PATCH') }}
@@ -131,6 +187,7 @@
                                                 {{ $comment->id }}
                                             @endslot
                                         @endcomponent
+                                        {{-- Comment update END--}}
                                     </p>
                                 </div>
                             </div>

@@ -2,6 +2,8 @@
 
 @section('title', 'Create Event')
 
+<link rel="stylesheet" href="{{ asset('css/map.css') }}">
+
 @include('admin.includes.scripts')
 
 @section('content_header')
