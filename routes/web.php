@@ -33,10 +33,8 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
 
     Route::resource('/profile', 'UserController');
 
+    Route::resource('/products', 'ProductController');
+
     Route::get('/', 'DashboardController@index');
-
-    // Route::get('/profile', 'UserController@index');
-
-    // Route::post('/profile/{id}', 'UserController@update');
 
 });

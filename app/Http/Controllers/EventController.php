@@ -188,17 +188,13 @@ class EventController extends Controller
     public function event_by_id($id)
     {
         $event = Event::find($id);
+        $attending = Attend::where('event_id', $id)->where('user_id', Auth::user()->id)->first();
         $attend_count = Attend::where('event_id', $id)->count();
-        if(Auth::check()) {
-            $user_attending = Attend::where('user_id', Auth::user()->id)->where('event_id', $id)->get();
-        } else {
-            $user_attending = null;
-        }
         $comments = Comment::where('event_id', $id)->get();
         return view('events.event_by_id', [
             'event' => $event,
+            'attending' => $attending,
             'attend_count' => $attend_count,
-            'user_attending' => $user_attending,
             'comments' => $comments
         ]);
     }
