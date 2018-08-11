@@ -7,7 +7,7 @@
 @section('content_header')
     <div class="container">
         <div class="row">
-            <h3>Create Product</h3>
+            <h3>Edit Product</h3>
         </div>
     </div>
 @stop
@@ -31,6 +31,8 @@
                                 <label for="product_category">Select Category</label>
                                 <select class="form-control" name="product_category" id="product_category">
                                     <option value="0">Water Sports</option>
+                                    <option value="1">Skate</option>
+                                    <option value="2">Other</option>
                                 </select>
                             </div>
                         </div>

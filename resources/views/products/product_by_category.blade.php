@@ -9,23 +9,23 @@
                 @foreach($products as $product)
                     @component("components.card")
                         @slot('path')
-                            {{asset("images/events/$product->path")}}
+                            {{asset("images/products/$product->path")}}
                         @endslot
                         @slot('name')
                             {{$product->name}}
                         @endslot
                         @slot('description')
-                        <b>Location:</b> {{$product->location->address}}
+                            €{{$product->cost}}
                         @endslot
                         @slot('link')
-                            {{url("event/$product->id")}}
+                            {{url("product/$product->id")}}
                         @endslot
                     @endcomponent
                 @endforeach
             </div>
         </div>
         <div class="center_paginate">
-            {{ $product->links() }}
+            {{ $products->links() }}
         </div>
     </div>
 @endsection

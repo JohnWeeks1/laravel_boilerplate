@@ -45,6 +45,7 @@
                 <thead>
                 <tr>
                     <th>Name</th>
+                    <th>Category</th>
                     <th>Description</th>
                     <th>Image</th>
                     <th>Options</th>            
@@ -54,13 +55,22 @@
                 @foreach($products as $product)
                     <tr>
                         <td>{{$product->name}}</td>
+                        <td>
+                            @if($product->product_category == 0)
+                                Water Sports
+                            @elseif($product->product_category == 1)
+                                Skate
+                            @else
+                                Other
+                            @endif    
+                        </td>
                         <td>{{substr("$product->description",0,70)}}...</td>
                         <td>
                             <img src="{{ asset("images/products/$product->path") }}" alt="" style="height:50px;">
                         </td>
                         <td>
                             {!! Form::open(['method' => 'DELETE', 'route' => ['products.destroy', $product->id]]) !!}
-                                <a href="{{ url('admin/events/' . $product->id . '/edit') }}" class="btn btn-warning" style="margin-top:10px;">
+                                <a href="{{ url('admin/products/' . $product->id . '/edit') }}" class="btn btn-warning" style="margin-top:10px;">
                                     <i class="fa fa-pencil" aria-hidden="true"></i>
                                 </a>                    
                                 {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit','class' => 'btn btn-danger']) !!}
@@ -70,6 +80,9 @@
                 @endforeach
                 </tbody>
             </table>
+        </div>
+        <div class="center_paginate">
+            {{ $products->links() }}
         </div>
     </div>
 @stop

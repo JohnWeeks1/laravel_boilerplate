@@ -8,6 +8,11 @@ All Sections
   background: white;
 }
 
+.center_paginate{
+        display: flex;
+        justify-content:center;
+    }
+
 
 /* #############################################
 Profile Section

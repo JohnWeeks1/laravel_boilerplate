@@ -38,6 +38,16 @@
                         <li class="nav-item">
                             <a class="nav-link @if(Request::url() === url('/events')) active @endif" href="{{ url('/events') }}">Events</a>
                         </li>
+                        <li class="nav-item dropdown">
+                            <a class="nav-link dropdown-toggle" href="" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                Products
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="dropdown04">
+                                <a class="dropdown-item" href="{{ url('product_by_category/0') }}">Water Sports</a>
+                                <a class="dropdown-item" href="{{ url('product_by_category/1') }}">Skate</a>
+                                <a class="dropdown-item" href="{{ url('product_by_category/2') }}">Other</a>
+                            </div>
+                        </li>
                         </ul>
                         <div class="navbar-nav">
                             <li class="nav-item dropdown">
@@ -50,7 +60,7 @@
                                         <a class="dropdown-item" href="{{ route('register') }}">Register</a>
                                     @else
                                         <a class="dropdown-item" href="{{ url('profile') }}">Profile</a>
-                                        <a class="dropdown-item" href="{{ url('admin') }}">Dashboard</a>
+                                        <a class="dropdown-item" href="{{ url('admin/dashboard') }}">Dashboard</a>
                                         <hr>
                                         <a class="dropdown-item" href="{{ route('logout') }}">logout</a>
                                     @endif

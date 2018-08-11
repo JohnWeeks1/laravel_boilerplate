@@ -55,7 +55,6 @@
                 @foreach($events as $event)    
                     <tr>
                         <td>{{$event->name}}</td>
-                        <td>{{$event->location->address}}</td>
                         <td>{{substr("$event->description",0,70)}}...</td>
                         <td>
                             <img src="{{ asset("images/events/$event->path") }}" alt="" style="height:50px;">

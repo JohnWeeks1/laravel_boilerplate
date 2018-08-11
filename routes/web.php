@@ -19,6 +19,8 @@ Route::get('/profile', 'ProfileController@index');
 
 Route::get('/events', 'EventController@events');
 
+Route::get('/product_by_category/{id}', 'ProductController@product_by_category');
+
 Route::get('/event/{id}', 'EventController@event_by_id');
 
 Route::resource('/comments', 'CommentController');
@@ -35,6 +37,6 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
 
     Route::resource('/products', 'ProductController');
 
-    Route::get('/', 'DashboardController@index');
+    Route::get('/dashboard', 'DashboardController@index');
 
 });

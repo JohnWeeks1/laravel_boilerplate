@@ -16,7 +16,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('user_id', Auth::user()->id)->get();
+        $products = Product::where('user_id', Auth::user()->id)->paginate(20);
         return view('admin.products.products', [
             'products' => $products
         ]);
@@ -57,11 +57,6 @@ class ProductController extends Controller
 
         if ($request->hasFile('image')) {
 
-            // if(!empty($product->path)) {
-            //     $file_path = "images/products/$user->path";
-            //     unlink($file_path);
-            // }
-
             $image = $request->file('image');
             $filename = time().'.'.$image->getClientOriginalExtension();
             
@@ -95,7 +90,10 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+        return view('admin.products.edit_product', [
+            'product' => $product
+        ]);
     }
 
     /**
@@ -107,7 +105,35 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $request->validate([
+            'product_category' => 'required',
+            'name' => 'required|max:255',
+            'description' => 'required',
+            'cost' => 'required',
+        ]);
+
+        $product = Product::findOrFail($id);
+
+        if ($request->hasFile('image')) {
+
+            if(!empty($product->path)) {
+                $file_path = "images/products/$product->path";
+                unlink($file_path);
+            }
+
+            $image = $request->file('image');
+            $filename = time().'.'.$image->getClientOriginalExtension();
+            
+            $path = 'images/products/'.$filename;
+            Image::make($image->getRealPath())->save($path);
+
+            $product->path = $filename;
+            
+        }
+
+        $product->update($request->all());
+
+        return redirect('admin/products')->with('success', 'You just updated the product called ' . $request['name'] . '');
     }
 
     /**
@@ -118,6 +144,17 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $product = Product::find($id);
+        $product->delete();
+
+        return redirect('admin/products')->with('success', 'You just deleted a product');
+    }
+
+    public function product_by_category($id)
+    {
+        $products = Product::where('product_category', $id)->paginate(15);
+        return view('products.product_by_category', [
+            'products' => $products
+        ]);
     }
 }
