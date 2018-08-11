@@ -49,7 +49,9 @@
                                         <a class="dropdown-item" href="{{ route('login') }}">login</a>
                                         <a class="dropdown-item" href="{{ route('register') }}">Register</a>
                                     @else
+                                        <a class="dropdown-item" href="{{ url('profile') }}">Profile</a>
                                         <a class="dropdown-item" href="{{ url('admin') }}">Dashboard</a>
+                                        <hr>
                                         <a class="dropdown-item" href="{{ route('logout') }}">logout</a>
                                     @endif
                                 </div>

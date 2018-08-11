@@ -15,6 +15,8 @@ Auth::routes();
 
 Route::get('/', 'HomeController@index');
 
+Route::get('/profile', 'ProfileController@index');
+
 Route::get('/events', 'EventController@events');
 
 Route::get('/event/{id}', 'EventController@event_by_id');

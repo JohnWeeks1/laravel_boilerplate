@@ -112,7 +112,6 @@ Profile Section
 ############################################# --}}
 <script src="http://ajax.googleapis.com/ajax/libs/jquery/2.0.0/jquery.min.js"></script>
 <script src="../js/cropit.js"></script>
-
 <script>
       $(function() {
 
@@ -140,15 +139,11 @@ function initMap() {
     center: {lat: -33.8688, lng: 151.2195},
     zoom: 13
     });
-
     var input = document.getElementById('pac-input');
-
     var autocomplete = new google.maps.places.Autocomplete(
         input, {placeIdOnly: true});
     autocomplete.bindTo('bounds', map);
-
     map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
-
     var infowindow = new google.maps.InfoWindow();
     var infowindowContent = document.getElementById('infowindow-content');
     infowindow.setContent(infowindowContent);
@@ -159,16 +154,13 @@ function initMap() {
     marker.addListener('click', function() {
     infowindow.open(map, marker);
     });
-
     autocomplete.addListener('place_changed', function() {
     infowindow.close();
     var place = autocomplete.getPlace();
-
     if (!place.place_id) {
         return;
     }
     geocoder.geocode({'placeId': place.place_id}, function(results, status) {
-
         if (status !== 'OK') {
         window.alert('Geocoder failed due to: ' + status);
         return;
@@ -189,7 +181,7 @@ function initMap() {
     });
     });
 }
-
 </script>
 <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyCR5PFyvraK8Cqbu-vQu7UAR-NkcABHNuw&libraries=places&callback=initMap"></script>
+
 @stop

@@ -9,13 +9,19 @@
 @import '~bootstrap/scss/bootstrap';
 
 .container{
+    .jumbotron{
+        //event_by_id.blade.php
+        .row{
+            #comments{
+                padding-top: 20px;
+            }
+        }
+        //event_by_id.blade.php END
+    }
+
     .center_paginate{
         display: flex;
         justify-content:center;
     }
-    .row{
-        #comments{
-            padding-top: 20px;
-        }
-    }
+
 }

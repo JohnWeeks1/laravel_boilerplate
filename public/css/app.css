@@ -10471,6 +10471,10 @@ a.text-dark:focus {
   }
 }
 
+.container .jumbotron .row #comments {
+  padding-top: 20px;
+}
+
 .container .center_paginate {
   display: -webkit-box;
   display: -ms-flexbox;
@@ -10478,9 +10482,5 @@ a.text-dark:focus {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
-}
-
-.container .row #comments {
-  padding-top: 20px;
 }
 

@@ -28,10 +28,5 @@ class Event extends Model
     public function attending()
     {
         return $this->hasOne('App\Attend', 'event_id', 'id');
-    }    
-
-    public function users_attend()
-    {
-        return $this->hasManyThrough('App\User', 'App\Attend', 'event_id', 'id');
-    }  
+    }
 }

@@ -50,6 +50,7 @@ class EventController extends Controller
             'name' => 'required|unique:events|max:255',
             'description' => 'required',
             'image' => 'required',
+            'address' => 'required',
         ]);
 
         $event = new Event;
@@ -67,21 +68,21 @@ class EventController extends Controller
             Image::make($image->getRealPath())->save($path);
 
             $event->path = $filename;
-            //$event->save();
-            //$event_id = DB::getPdo()->lastInsertId();
+            $event->save();
+            $event_id = DB::getPdo()->lastInsertId();
         }
 
         $location = new Location;
 
         $address = $request['address'];
-        $data = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($address)."&key=AIzaSyANuAIIUIUFhpjtmBIcoTvQkUVTfPux2iU");
-        dd($data);
+        $data = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($address)."&key=AIzaSyB58LtIzgABo3BfoTaI4XL4gMNmx0XfSnA");
         $location->event_id = $event_id;
         $location->address = $address;
         $location->lng = json_decode($data)->results[0]->geometry->location->lng;
         $location->lat = json_decode($data)->results[0]->geometry->location->lat;
-        dd($location->lat);
+
         $location->save();
+        
         return redirect('admin/events')->with('success', 'You just created a new event');
     }
 
@@ -150,14 +151,12 @@ class EventController extends Controller
             $location = Location::where('event_id', $id);
 
             $address = $request['address'];
-            $prepAddr = str_replace(' ','+',$address);
-            $geocode=file_get_contents('http://maps.google.com/maps/api/geocode/json?address='.$prepAddr.'&sensor=false');
-            $output= json_decode($geocode);
+            $data = file_get_contents("https://maps.googleapis.com/maps/api/geocode/json?address=".urlencode($address)."&key=AIzaSyB58LtIzgABo3BfoTaI4XL4gMNmx0XfSnA");
 
             $location->update([ 
                 'address' => $address,
-                'lng' => $output->results[0]->geometry->location->lng,
-                'lat' => $output->results[0]->geometry->location->lat
+                'lng' => json_decode($data)->results[0]->geometry->location->lng,
+                'lat' => json_decode($data)->results[0]->geometry->location->lat
             ]);
         }
 
@@ -189,11 +188,17 @@ class EventController extends Controller
     public function event_by_id($id)
     {
         $event = Event::find($id);
-        $attending = Attend::where('event_id', $id)->count();
+        $attend_count = Attend::where('event_id', $id)->count();
+        if(Auth::check()) {
+            $user_attending = Attend::where('user_id', Auth::user()->id)->where('event_id', $id)->get();
+        } else {
+            $user_attending = null;
+        }
         $comments = Comment::where('event_id', $id)->get();
         return view('events.event_by_id', [
             'event' => $event,
-            'attending' => $attending,
+            'attend_count' => $attend_count,
+            'user_attending' => $user_attending,
             'comments' => $comments
         ]);
     }
