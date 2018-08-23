@@ -47,13 +47,12 @@
                             @slot('body')
                             {!! Form::open(['method' => 'POST', 'route' => ['send_email']]) !!}
                             {{ csrf_field() }}
-                                <div class="display_instructions alert alert-info"> </div>
                                 <div class="form-group">
                                     <label for="email_message">Email message</label>
-                                    <textarea class=" form-control" rows="5" name="email_message">{{ old('email_message') }}</textarea>
+                                    <textarea class="form-control" rows="5" name="email_message">{{ old('email_message') }}</textarea>
                                     <input type="hidden" value="{{$product->user->email}}" name="email">
                                 </div>
-                                <button type="submit" class="btn btn-primary ">Submit</button>
+                                <button type="submit" class="btn btn-primary">Submit</button>
                                 {!! Form::close() !!}
                             @endslot
                         @endcomponent
@@ -68,7 +67,6 @@
                             @endslot
                             @slot('body')
                             <form>
-                                <div class="display_instructions alert alert-info"> </div>
                                 <div class="form-group">
                                     <label for="comment">Whatsapp message</label>
                                     <textarea class="message_seller_textbox form-control" rows="5" name="whatsapp_message"></textarea>

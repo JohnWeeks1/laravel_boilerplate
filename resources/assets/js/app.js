@@ -1,4 +1,3 @@
-
 // /**
 //  * First we will load all of this project's JavaScript dependencies which
 //  * includes Vue and other libraries. It is a great starting point when
@@ -20,22 +19,3 @@ require('./bootstrap');
 // const app = new Vue({
 //     el: '#app'
 // });
-
-$(function(){
-    $(".display_instructions").text("You can't send an empty message");
-
-    $(".message_seller_textbox").keyup(function () {
-        if ($(this).val()) {
-            $(".show_button_if_not_empty").show();
-            $(".display_instructions").hide();
-        }
-        else {
-            $(".show_button_if_not_empty").hide();
-            $(".display_instructions").show();
-        }
-    });
-    $(".show_button_if_not_empty").click(function () {
-        $(".message_seller_textbox").val('').hide();
-    });
-
-});
