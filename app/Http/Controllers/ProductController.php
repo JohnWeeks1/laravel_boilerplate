@@ -3,8 +3,10 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Mail\ProductMail;
 use App\Product;
 use Image;
+use Mail;
 use Auth;
 
 class ProductController extends Controller
@@ -156,5 +158,24 @@ class ProductController extends Controller
         return view('products.product_by_category', [
             'products' => $products
         ]);
+    }
+
+    public function product($id)
+    {
+        $product = Product::find($id);
+        return view('products.product_by_id', [
+            'product' => $product
+        ]);
+    }
+
+    public function send_email(Request $request)
+    {   
+        Mail::to(
+            $request->input('email'))
+            ->send( new ProductMail(
+            $request->input('email_message')
+        ));
+
+        return redirect()->back()->with('success', 'You just sent an email');
     }
 }

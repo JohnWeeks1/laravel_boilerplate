@@ -8,6 +8,12 @@
 // Bootstrap
 @import '~bootstrap/scss/bootstrap';
 
+//home.blade.php
+#carousel {
+    margin-top: -25px;
+}
+//home.blade.php END
+
 .container{
     .jumbotron{
         //event_by_id.blade.php
@@ -22,6 +28,10 @@
     .center_paginate{
         display: flex;
         justify-content:center;
+    }
+    //product_by_id.blade.php / message_seller
+    .show_button_if_not_empty {
+        display: none;
     }
 
 }

@@ -87,4 +87,12 @@ class ProfileController extends Controller
     {
         //
     }
+
+    public function profile_by_user_id($id)
+    {
+        $user = User::find($id);
+        return view('profile.profile_page', [
+            'user' => $user
+        ]);
+    }
 }

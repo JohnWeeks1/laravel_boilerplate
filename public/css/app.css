@@ -10471,6 +10471,10 @@ a.text-dark:focus {
   }
 }
 
+#carousel {
+  margin-top: -25px;
+}
+
 .container .jumbotron .row #comments {
   padding-top: 20px;
 }
@@ -10482,5 +10486,9 @@ a.text-dark:focus {
   -webkit-box-pack: center;
       -ms-flex-pack: center;
           justify-content: center;
+}
+
+.container .show_button_if_not_empty {
+  display: none;
 }
 

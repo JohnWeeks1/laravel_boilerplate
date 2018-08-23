@@ -17,9 +17,15 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/profile', 'ProfileController@index');
 
+Route::get('/profile/{id}', 'ProfileController@profile_by_user_id');
+
+Route::post('/send_email', 'ProductController@send_email')->name('send_email');
+
 Route::get('/events', 'EventController@events');
 
 Route::get('/product_by_category/{id}', 'ProductController@product_by_category');
+
+Route::get('/product/{id}', 'ProductController@product');
 
 Route::get('/event/{id}', 'EventController@event_by_id');
 

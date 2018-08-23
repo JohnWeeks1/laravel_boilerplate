@@ -20,3 +20,22 @@ require('./bootstrap');
 // const app = new Vue({
 //     el: '#app'
 // });
+
+$(function(){
+    $(".display_instructions").text("You can't send an empty message");
+
+    $(".message_seller_textbox").keyup(function () {
+        if ($(this).val()) {
+            $(".show_button_if_not_empty").show();
+            $(".display_instructions").hide();
+        }
+        else {
+            $(".show_button_if_not_empty").hide();
+            $(".display_instructions").show();
+        }
+    });
+    $(".show_button_if_not_empty").click(function () {
+        $(".message_seller_textbox").val('').hide();
+    });
+
+});

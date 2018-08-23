@@ -62,7 +62,10 @@
                                 Attending
                             @endslot
                             @slot('body')
-                                NAMES
+                            {{$event->users}}
+                                @foreach($event->users as $user)
+                                {{$user->name}}
+                                @endforeach
                             @endslot
                         @endcomponent
                         {{-- List of people attending this event END--}}

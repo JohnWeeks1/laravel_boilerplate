@@ -1,6 +1,6 @@
 @extends('layouts.app')
 
-@section('title', 'Events')
+@section('title', 'Profile')
 
 <link rel="stylesheet" href="{{ asset('css/map.css') }}">
 
@@ -10,7 +10,7 @@
     <div class="jumbotron">
         <div class="row">
             <div class="col-md-3 col-sm-4 text-center">
-                <img class="rounded img-fluid" src="images/profile_pics/{{$user->path}}" alt="">
+                <img class="rounded img-fluid" src="{{asset("images/profile_pics/$user->path")}}" alt="">
             </div>
             <div class="col-md-9 col-sm-8">
                 <br>
