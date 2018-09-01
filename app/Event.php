@@ -25,13 +25,8 @@ class Event extends Model
         return $this->hasMany('App\Comment');
     }
 
-    public function attending()
-    {
-        return $this->hasOne('App\Attend', 'event_id', 'id');
-    }
-
     public function users()
     {
-        return $this->hasManyThrough('App\User', 'App\Attend', 'event_id', 'id', 'duser_id');
+        return $this->belongsToMany('App\User')->withTimestamps();
     }
 }

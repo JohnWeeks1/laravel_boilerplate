@@ -23,6 +23,10 @@ Route::post('/send_email', 'ProductController@send_email')->name('send_email');
 
 Route::get('/events', 'EventController@events');
 
+Route::post('/attend_event', 'EventController@attend_event')->name('event.attend');
+
+Route::post('/unattend_event/{id}', 'EventController@unattend_event')->name('event.unattend');
+
 Route::get('/product_by_category/{id}', 'ProductController@product_by_category');
 
 Route::get('/product/{id}', 'ProductController@product');
@@ -30,8 +34,6 @@ Route::get('/product/{id}', 'ProductController@product');
 Route::get('/event/{id}', 'EventController@event_by_id');
 
 Route::resource('/comments', 'CommentController');
-
-Route::resource('/attend', 'AttendController');
 
 Route::get('/logout', 'Auth\LoginController@logout');
 

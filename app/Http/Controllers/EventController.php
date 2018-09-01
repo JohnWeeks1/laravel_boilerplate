@@ -5,7 +5,6 @@ namespace App\Http\Controllers;
 use Illuminate\Http\Request;
 use App\Location;
 use App\Comment;
-use App\Attend;
 use App\Event;
 use App\User;
 use Auth;
@@ -188,15 +187,29 @@ class EventController extends Controller
     public function event_by_id($id)
     {
         $event = Event::find($id);
-        $attending = Attend::where('event_id', $id)->where('user_id', Auth::user()->id)->first();
-        $attend_count = Attend::where('event_id', $id)->count();
         $comments = Comment::where('event_id', $id)->get();
+        $is_attending = DB::table("event_user")->where("user_id", Auth::user()->id)->where("event_id", $id)->first();
         return view('events.event_by_id', [
             'event' => $event,
-            'attending' => $attending,
-            'attend_count' => $attend_count,
-            'comments' => $comments
+            'comments' => $comments,
+            'is_attending' => $is_attending
         ]);
+    }
+
+    public function attend_event(Request $request) 
+    {
+        $event = Event::find($request['event_id']);
+        //This will add to the event_user pivot table
+        $event->users()->attach(Auth::user()->id);
+        return redirect()->back()->with('success','You are attending this event');
+    }
+
+    public function unattend_event($id) 
+    {
+        $event = Event::find($id);
+        //This will remove from the event_user pivot table
+        $event->users()->detach(Auth::user()->id);
+        return redirect()->back()->with('success','You are no longer attending this event');
     }
        
 }

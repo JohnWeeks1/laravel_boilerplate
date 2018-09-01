@@ -36,20 +36,24 @@
                         <span class="float-left"> <b>Location:</b> {{$event->location->address}}</span>
                         <br><br>
                         @if(Auth::check())
-                                @if(empty($attending['attending']))
-                                    {!! Form::open(['method' => 'POST', 'route' => ['attend.store']]) !!}
+                                @if(!$is_attending)
+                                    {!! Form::open(['method' => 'POST', 'route' => ['event.attend']]) !!}
                                     {{ method_field('POST') }}
                                     <input type="hidden" name="event_id" value="{{ $event->id }}">
                                     <input type="hidden" name="attending" value="1">
                                     <button type="submit" class="btn btn-sm btn-primary">Attend</button>
-                                @else
-                                    {{Form::open(['method'  => 'DELETE', 'route' => ['attend.destroy', $attending['id']]])}}
+                                @else   
+                                    {{Form::open(['method'  => 'POST', 'route' => ['event.unattend',  $event->id]])}}
                                     <button type="submit" class="btn btn-sm btn-warning">Don't Attend</button>
+                                
                                 @endif
                                 @csrf
                                 <button type="button" class="btn btn-success btn-sm" data-toggle="modal" data-target="#myModal{{ $event->id }}">Map</button>
-                                <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#attending">See Attending {{$attend_count}}</button>
-                            {!! Form::close() !!}
+                                <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#attending">See Attending {{$event->users->count()}}</button>
+                            
+                            
+                            
+                                {!! Form::close() !!}
                         @endif
 
 
@@ -62,10 +66,16 @@
                                 Attending
                             @endslot
                             @slot('body')
-                            {{$event->users}}
-                                @foreach($event->users as $user)
-                                {{$user->name}}
+                            <div class="list-group">
+                                @foreach($event->users as $user_attending)                                    
+                                    <li class="list-group-item list-group-item-action">
+                                            <img src="/images/profile_pics/{{$user_attending->path}}" alt="" width="60">
+                                            {{$user_attending->name}}
+                                            <a href="/profile/{{$user_attending->id}}">View Profile</a>
+                                    </li>
                                 @endforeach
+                            </div>
+
                             @endslot
                         @endcomponent
                         {{-- List of people attending this event END--}}
