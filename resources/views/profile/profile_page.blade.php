@@ -18,8 +18,31 @@
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam et nesciunt, iste recusandae vero dolores temporibus assumenda est molestiae optio qui quaerat totam sit doloremque deserunt magni at similique quasi.</p>
                 <ul>
                     <li> <a href="">Email</a> </li>
-                    <li> <a href="">Whatsapp</a> </li>
+                    <li> <a href="" data-toggle="modal" data-target="#whatsapp">Whatsapp</a> </li>
                 </ul>
+
+                        {{-- List of people attending this event --}}
+                        @component('components.model_basic')
+                            @slot('name')
+                                whatsapp
+                            @endslot
+                            @slot('header')
+                                Whatsapp
+                            @endslot
+                            @slot('body')
+                            <div class='form-group'>
+                                <label for='phone'>Phone Number</label>
+                                <input type='phone' class='form-control' id='mobile' value="{{substr($user->mobile,1,50)}}" readonly>
+                              </div>
+                            <div class='form-group'>
+                                <label for='message'>Message</label>
+                                <textarea class='form-control' rows='5' id='message'></textarea>
+                              </div>
+                              <a type='button' href='https://api.whatsapp.com/send' target='_blank' class='btn btn-success pull-right send_whatsapp_message'>Send</a>
+                            @endslot
+                        @endcomponent
+
+
                 <button class="btn btn-info float-right">Edit</button>
             </div>
         </div>

@@ -9,6 +9,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>{{ config('app.name', 'Laravel') }}</title>
+    <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
 
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}" defer></script>
@@ -74,5 +75,21 @@
             @yield('content')
         </main>
     </div>
+<script>
+$(function() {
+    $('.send_whatsapp_message').click(function () {
+        var link = $(this).attr("href");
+        if($("#mobile").val() != null && $("#message").val() != null) {
+          var phone = $("#mobile").val();
+          var message = $('#message').val();
+          var totalPhone = '?phone=' + phone;
+          var totalmessage = '&text=' + message;
+          var info = totalPhone + totalmessage;
+          var result = link + info;
+          $('.send_whatsapp_message').attr("href", result);
+        }
+    });
+});
+</script>
 </body>
 </html>

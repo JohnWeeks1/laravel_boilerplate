@@ -45,9 +45,14 @@ class UserController extends Controller
         $image_data = $request->get('image-data');
         $info = base64_decode(preg_replace('#^data:image/\w+;base64,#i', '', $image_data));
 
+        $country_code = $request['country_code'];
+        $mobile = $request['mobile'];
+        
         $user = User::find($id);
         $user->name = $request['name'];
         $user->email = $request['email'];
+        $user->mobile = $country_code . $mobile;
+
 
         if(!empty($info)) {
             if(!empty($user->path)) {

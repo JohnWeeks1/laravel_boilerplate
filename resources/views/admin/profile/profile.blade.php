@@ -42,6 +42,21 @@
                 </div> 
             </div>
             <div class="col-md-offset-2 col-md-8">
+                <label for="email">Mobile</label>
+                <div class="form-group">
+                    <select class="form-control" id="country_code" name="country_code">
+                        <option value="{{$user->mobile ? substr($user->mobile,0,3) : ''}}">
+                                {{$user->mobile ? substr($user->mobile,0,3) : ''}}
+                        </option>
+                      <option value="+34">Spain (+34)</option>
+                      <option value="+44">United Kingdom (+44)</option>
+                    </select>
+                </div>
+                  <div class="form-group">
+                      <input type="number" class="form-control" id="mobile" name="mobile" placeholder="Email" value="{{$user->mobile ? substr($user->mobile,3,20) : ''}}">
+                  </div>
+              </div>
+            <div class="col-md-offset-2 col-md-8">
                 <div class="form-group">
                     <label for="">Current Image</label> <br>
                     @if(!empty($user->path))
