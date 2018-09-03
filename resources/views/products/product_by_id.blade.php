@@ -66,13 +66,15 @@
                                 Whatsapp
                             @endslot
                             @slot('body')
-                            <form>
-                                <div class="form-group">
-                                    <label for="comment">Whatsapp message</label>
-                                    <textarea class="message_seller_textbox form-control" rows="5" name="whatsapp_message"></textarea>
-                                </div>
-                                <button type="submit" class="btn btn-primary show_button_if_not_empty">Submit</button>
-                            </form>
+                            <div class='form-group'>
+                                <label for='phone'>Phone Number</label>
+                                <input type='phone' class='form-control' id='mobile' value="{{substr($product->user->mobile,1,50)}}" readonly>
+                              </div>
+                            <div class='form-group'>
+                                <label for='message'>Message</label>
+                                <textarea class='form-control' rows='5' id='message'></textarea>
+                              </div>
+                              <a type='button' href='https://api.whatsapp.com/send' target='_blank' class='btn btn-success pull-right send_whatsapp_message'>Send</a>
                             @endslot
                         @endcomponent
                         {{-- Whatsapp END--}}

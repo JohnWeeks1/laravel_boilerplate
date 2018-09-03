@@ -21,7 +21,7 @@
                     <li> <a href="" data-toggle="modal" data-target="#whatsapp">Whatsapp</a> </li>
                 </ul>
 
-                        {{-- List of people attending this event --}}
+                        {{-- Whatsapp --}}
                         @component('components.model_basic')
                             @slot('name')
                                 whatsapp
@@ -41,6 +41,7 @@
                               <a type='button' href='https://api.whatsapp.com/send' target='_blank' class='btn btn-success pull-right send_whatsapp_message'>Send</a>
                             @endslot
                         @endcomponent
+                        {{-- END Whatsapp --}}
 
 
                 <button class="btn btn-info float-right">Edit</button>
@@ -64,6 +65,29 @@
                         @endslot
                         @slot('link')
                             {{url("event/$event->id")}}
+                        @endslot
+                    @endcomponent
+                @endforeach
+            </div>
+        </div>
+    </div>
+    <div class="row"> 
+        <div class="col-md-12">
+            <h4>Products</h4>
+            <div class="card-columns">
+                @foreach($user->products as $product)
+                    @component("components.card")
+                        @slot('path')
+                            {{asset("images/products/$product->path")}}
+                        @endslot
+                        @slot('name')
+                            {{$product->name}}
+                        @endslot
+                        @slot('description')
+                            €{{$product->cost}}
+                        @endslot
+                        @slot('link')
+                            {{url("product/$product->id")}}
                         @endslot
                     @endcomponent
                 @endforeach

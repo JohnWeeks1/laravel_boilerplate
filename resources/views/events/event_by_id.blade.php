@@ -31,7 +31,7 @@
                         <p>{{$event->description}}</p>
                     </div>
                     <div class="col-md-12">
-                        <span class="float-left"><b>Creator:</b> {{$event->user->name}}</span>
+                        <span class="float-left"><b>Creator:</b> <a href="/profile/{{$event->user->id}}">{{$event->user->name}}</a> </span>
                         <br>
                         <span class="float-left"> <b>Location:</b> {{$event->location->address}}</span>
                         <br><br>

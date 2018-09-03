@@ -3,7 +3,7 @@
 @section('title', 'Home')
 
 @section('content')
-<div id="carousel" class="carousel slide" data-ride="carousel">
+{{-- <div id="carousel" class="carousel slide" data-ride="carousel">
     <!-- Indicators -->
     <ul class="carousel-indicators">
         <li data-target="#demo" data-slide-to="0" class="active"></li>
@@ -23,9 +23,9 @@
     <a class="carousel-control-next" href="#demo" data-slide="next">
         <span class="carousel-control-next-icon"></span>
     </a>
-</div>
+</div> --}}
     <div class="container">
-        <div class="row"> 
+        <div class="row justify-content-start"> 
             <div class="card-columns">
                 @foreach($products as $product)
                     @component("components.card")
