@@ -17,9 +17,31 @@
                 <h3>{{$user->name}}</h3>
                 <p>Lorem ipsum dolor sit amet consectetur, adipisicing elit. Magnam et nesciunt, iste recusandae vero dolores temporibus assumenda est molestiae optio qui quaerat totam sit doloremque deserunt magni at similique quasi.</p>
                 <ul>
-                    <li> <a href="">Email</a> </li>
+                    <li> <a href="" data-toggle="modal" data-target="#email">Email</a>  </li>
                     <li> <a href="" data-toggle="modal" data-target="#whatsapp">Whatsapp</a> </li>
                 </ul>
+
+                    {{-- Email --}}
+                    @component('components.model_basic')
+                        @slot('name')
+                            email
+                        @endslot
+                        @slot('header')
+                            Email {{$user->name}}
+                        @endslot
+                        @slot('body')
+                        {!! Form::open(['method' => 'POST', 'route' => ['send_email']]) !!}
+                        {{ csrf_field() }}
+                            <div class="form-group">
+                                <label for="email_message">Email message</label>
+                                <textarea class="form-control" rows="5" name="email_message">{{ old('email_message') }}</textarea>
+                                <input type="hidden" value="{{$user->email}}" name="email">
+                            </div>
+                            <button type="submit" class="btn btn-primary">Submit</button>
+                            {!! Form::close() !!}
+                        @endslot
+                    @endcomponent
+                    {{-- Email END--}}
 
                         {{-- Whatsapp --}}
                         @component('components.model_basic')
@@ -27,7 +49,7 @@
                                 whatsapp
                             @endslot
                             @slot('header')
-                                Whatsapp
+                                Whatsapp {{$user->name}}
                             @endslot
                             @slot('body')
                             <div class='form-group'>
@@ -51,7 +73,9 @@
     <div class="row">
         <div class="col-md-12">
             <h4>Events</h4>
+        </div>
             <div class="card-columns">
+                <?php $a=0; ?>
                 @foreach($user->events as $event)
                     @component("components.card")
                         @slot('path')
@@ -67,14 +91,18 @@
                             {{url("event/$event->id")}}
                         @endslot
                     @endcomponent
+                    <?php $a++; if($a==3){ break;} ?>
                 @endforeach
             </div>
-        </div>
     </div>
+    <br>
+    <br>
     <div class="row"> 
         <div class="col-md-12">
             <h4>Products</h4>
+        </div>
             <div class="card-columns">
+                <?php $b=0; ?>
                 @foreach($user->products as $product)
                     @component("components.card")
                         @slot('path')
@@ -90,9 +118,9 @@
                             {{url("product/$product->id")}}
                         @endslot
                     @endcomponent
+                    <?php $b++; if($b==3){ break;} ?>
                 @endforeach
             </div>
-        </div>
     </div>
 </div>
 @endsection

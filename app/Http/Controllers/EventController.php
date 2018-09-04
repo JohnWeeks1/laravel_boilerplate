@@ -178,7 +178,7 @@ class EventController extends Controller
 
     public function events()
     {
-        $events = Event::paginate(15);
+        $events = Event::orderBy('created_at', 'desc')->paginate(15);
         return view('events.events', [
             'events' => $events
         ]); 
@@ -188,7 +188,17 @@ class EventController extends Controller
     {
         $event = Event::find($id);
         $comments = Comment::where('event_id', $id)->get();
-        $is_attending = DB::table("event_user")->where("user_id", Auth::user()->id)->where("event_id", $id)->first();
+
+        if(Auth::check()) {
+        $is_attending = 
+        DB::table("event_user")
+            ->where("user_id", Auth::user()->id)
+            ->where("event_id", $id)
+            ->first();
+        } else {
+            $is_attending = "";
+        }
+
         return view('events.event_by_id', [
             'event' => $event,
             'comments' => $comments,

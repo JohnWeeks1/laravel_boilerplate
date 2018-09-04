@@ -74,6 +74,11 @@
         <main class="py-4">
             @yield('content')
         </main>
+        <footer class="footer">
+            <div class="container">
+              <span class="text-muted">Place sticky footer content here.</span>
+            </div>
+          </footer>
     </div>
 <script>
 $(function() {

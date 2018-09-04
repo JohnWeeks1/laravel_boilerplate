@@ -24,7 +24,7 @@ class HomeController extends Controller
      */
     public function index()
     {
-        $products = Product::paginate(15);
+        $products = Product::orderBy('created_at', 'desc')->paginate(20);
         return view('home', [
             'products' => $products
         ]);

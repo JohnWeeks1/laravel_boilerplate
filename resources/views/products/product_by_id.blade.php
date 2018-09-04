@@ -27,7 +27,7 @@
                     <div class="col-md-12 text-center">
                         <h1>{{$product->name}}</h1>
                         <p>{{$product->description}}</p>
-                        <p>{{$product->cost}}</p>
+                        <p>€{{$product->cost}}</p>
                     </div>
                     <div class="col-md-12">
                     <span class="float-left"><b>Seller:</b> <a href="{{url('profile/'.$product->user->id)}}">{{$product->user->name}}</a> </span>

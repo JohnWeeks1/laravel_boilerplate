@@ -18,7 +18,7 @@ class ProductController extends Controller
      */
     public function index()
     {
-        $products = Product::where('user_id', Auth::user()->id)->paginate(20);
+        $products = Product::where('user_id', Auth::user()->id)->orderBy('created_at', 'desc')->paginate(20);
         return view('admin.products.products', [
             'products' => $products
         ]);
@@ -154,7 +154,7 @@ class ProductController extends Controller
 
     public function product_by_category($id)
     {
-        $products = Product::where('product_category', $id)->paginate(15);
+        $products = Product::where('product_category', $id)->orderBy('created_at', 'desc')->paginate(15);
         return view('products.product_by_category', [
             'products' => $products
         ]);
