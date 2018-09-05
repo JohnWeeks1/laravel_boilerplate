@@ -6,6 +6,7 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Input;
 use App\User;
 use App\Event;
+use App\Friend;
 use Image;
 use Auth;
 
@@ -51,8 +52,12 @@ class UserController extends Controller
         $user = User::find($id);
         $user->name = $request['name'];
         $user->email = $request['email'];
-        $user->mobile = $country_code . $mobile;
-
+        if(empty($user->mobile)){
+            $user->mobile = $country_code . $mobile .":00";
+        } else {
+            $user->mobile = $country_code . $mobile;
+        }
+        
 
         if(!empty($info)) {
             if(!empty($user->path)) {
@@ -84,5 +89,22 @@ class UserController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function friends()
+    {
+        $friends = Friend::where("user_requesting_friendship_id", Auth::user()->id)->paginate(20);
+        return view('admin.friends.friends', [
+            'friends' => $friends
+        ]);
+    }
+
+    public function unfriend($id) 
+    {
+        $friend = Friend::where("user_receiveing_friendship_id", $id)
+        ->where("user_requesting_friendship_id", Auth::user()->id)
+        ->delete();
+
+        return redirect()->back()->with('success','You just removed a friend.');
     }
 }

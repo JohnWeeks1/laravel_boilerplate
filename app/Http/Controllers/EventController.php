@@ -48,6 +48,8 @@ class EventController extends Controller
         $request->validate([
             'name' => 'required|unique:events|max:255',
             'description' => 'required',
+            'date' => 'required',
+            'time' => 'required',
             'image' => 'required',
             'address' => 'required',
         ]);
@@ -57,6 +59,7 @@ class EventController extends Controller
         $event->user_id = Auth::user()->id;
         $event->name = $request['name'];
         $event->description = $request['description'];
+        $event->date_time = $request['date'] . " " . $request['time'] . ":00";
 
         if($request->hasFile('image')) {
             
@@ -122,11 +125,14 @@ class EventController extends Controller
         $request->validate([
             'name' => 'required|max:255',
             'description' => 'required',
+            'date' => 'required',
+            'time' => 'required'
         ]);
 
         $event = Event::findOrFail($id);
         $event->name = $request['name'];
         $event->description = $request['description'];
+        $event->date_time = $request['date'] . " " . $request['time'];
 
         if ($request->hasFile('image')) {
 
@@ -145,6 +151,8 @@ class EventController extends Controller
             $event->update();
             
         }
+
+        $event->update();
 
         if(!empty($request['address'])) {
             $location = Location::where('event_id', $id);

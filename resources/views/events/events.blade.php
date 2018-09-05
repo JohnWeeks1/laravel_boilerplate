@@ -15,7 +15,8 @@
                         {{$event->name}}
                     @endslot
                     @slot('description')
-                      <b>Location:</b> {{$event->location->address}}
+                      <b>Location:</b> {{$event->location->address}} <br>
+                      <b>Date:</b> {{date('M j, Y h:ia', strtotime($event->date_time))}}</b>
                     @endslot
                     @slot('link')
                         {{url("event/$event->id")}}

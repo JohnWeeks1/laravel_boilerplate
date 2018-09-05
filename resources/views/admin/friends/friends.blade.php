@@ -7,7 +7,7 @@
 @section('content_header')
     <div class="container">
         <div class="row">
-            <h3>Events</h3>
+            <h3>My friends</h3>
         </div>
     </div>
 @stop
@@ -19,11 +19,6 @@
                     {{ session()->get('success') }}
                 </div>
             @endif
-        <div class="row">
-            <div class="col-md-8">
-                <a href="{{ route('events.create') }}" class="btn btn-primary btn-sm">Create Event</a>
-            </div>
-        </div>
         <br>
         {{-- {!! Form::open(['method' => 'POST', 'route' => ['events.edit', $event->id]]) !!} --}}
             <div class="row">
@@ -44,31 +39,26 @@
             <table class="table table-bordered">
                 <thead>
                 <tr>
-                    <th>Name</th>
-                    <th>Date</th>
-                    <th>Location</th>
-                    <th>Description</th>
                     <th>Image</th>
+                    <th>Name</th>
                     <th>Options</th>
                 </tr>
                 </thead>
                 <tbody>
-                @foreach($events as $event)    
+                @foreach($friends as $friend)    
                     <tr>
-                        <td>{{$event->name}}</td>
-                        <td>{{date('M j, Y h:ia', strtotime($event->date_time))}}</td>
-                        <td>{{$event->location->address}}</td>
-                        <td>{{substr("$event->description",0,70)}}...</td>
                         <td>
-                            <img src="{{ asset("images/events/$event->path") }}" alt="" style="height:50px;">
+                            <img src="{{ asset("images/profile_pics/".$friend->users[0]->path) }}" alt="" width="50">
                         </td>
+                        <td>{{$friend->users[0]->name}}</td>
                         <td>
-                            {!! Form::open(['method' => 'DELETE', 'route' => ['events.destroy', $event->id]]) !!}
-                                <a href="{{ url('admin/events/' . $event->id . '/edit') }}" class="btn btn-warning" style="margin-top:10px;">
-                                    <i class="fa fa-pencil" aria-hidden="true"></i>
-                                </a>                    
-                                {!! Form::button('<i class="fa fa-trash"></i>', ['type' => 'submit','class' => 'btn btn-danger']) !!}
-                            {!! Form::close() !!}
+                            @if($friend->approved_or_not == 0)
+                                <span class="bg-info">Friendship Pending</span>
+                            @elseif($friend->approved_or_not == 1)
+                                <a class="btn btn-primary btn-sm" href="{{url('profile/'.$friend->users[0]->id)}}">Profile</a>               
+                                <a class="btn btn-danger btn-sm" href="unfriend/{{$friend->user_receiveing_friendship_id}}">Unfriend</a> 
+                            @endif
+                            
                         </td>
                     </tr>
                 @endforeach

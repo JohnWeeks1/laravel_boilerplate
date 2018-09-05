@@ -19,6 +19,15 @@
                 <ul>
                     <li> <a href="" data-toggle="modal" data-target="#email">Email</a>  </li>
                     <li> <a href="" data-toggle="modal" data-target="#whatsapp">Whatsapp</a> </li>
+                    @if(url()->current() != url('profile'))
+                        @if(empty($friend_request))
+                            <li> <a href="{{ url('send_friend_request/'.$user->id)}}">Send Request</a> </li>
+                        @elseif($friend_request->approved_or_not == 0)
+                            <li> <span class="bg-info p-1">Friendship Pending</span> </li>
+                        @else
+                            <li> <span class="bg-success p-1">You are friends</span> </li>
+                        @endif
+                    @endif
                 </ul>
 
                     {{-- Email --}}
@@ -65,8 +74,37 @@
                         @endcomponent
                         {{-- END Whatsapp --}}
 
+                        @if(url()->current() == url('profile'))
+                            <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#options">Options</button>
+                        @endif
 
-                <button class="btn btn-info float-right">Edit</button>
+                {{-- Options --}}
+                    @component('components.model_basic')
+                        @slot('name')
+                            options
+                        @endslot
+                        @slot('header')
+                            Options
+                        @endslot
+                        @slot('body')
+                        <div class="list-group">                                  
+                            <li class="list-group-item list-group-item-action">
+                                <a href="{{url('profile_search')}}">Profile search</a>
+                                <p>Look for friends or new business connections.</p>
+                            </li>
+                            <li class="list-group-item list-group-item-action">
+                            <a href="{{url('admin/profile')}}">Edit my profile</a>
+                                <p>Takes you directly to your admin/profile section.</p>
+                            </li>
+                            <li class="list-group-item list-group-item-action">
+                                <a href="{{url('admin/friends')}}">My friends</a>
+                                <p>See my list of friends.</p>
+                            </li>
+                        </div>
+
+                        @endslot
+                    @endcomponent
+                {{-- Options END--}}
             </div>
         </div>
     </div>
@@ -74,9 +112,9 @@
         <div class="col-md-12">
             <h4>Events</h4>
         </div>
-            <div class="card-columns">
                 <?php $a=0; ?>
                 @foreach($user->events as $event)
+                <div class="col-md-4">
                     @component("components.card")
                         @slot('path')
                             {{asset("images/events/$event->path")}}
@@ -85,15 +123,16 @@
                             {{$event->name}}
                         @endslot
                         @slot('description')
-                            <b>Location:</b> {{$event->location->address}}
+                            <b>Location:</b> {{$event->location->address}} <br>
+                            <b>Date:</b> {{date('M j, Y h:ia', strtotime($event->date_time))}}</b>
                         @endslot
                         @slot('link')
                             {{url("event/$event->id")}}
                         @endslot
                     @endcomponent
-                    <?php $a++; if($a==3){ break;} ?>
+                    <?php $a++; if($a==4){ break;} ?>
+                </div>
                 @endforeach
-            </div>
     </div>
     <br>
     <br>
@@ -101,9 +140,9 @@
         <div class="col-md-12">
             <h4>Products</h4>
         </div>
-            <div class="card-columns">
                 <?php $b=0; ?>
                 @foreach($user->products as $product)
+                <div class="col-md-4">
                     @component("components.card")
                         @slot('path')
                             {{asset("images/products/$product->path")}}
@@ -118,7 +157,8 @@
                             {{url("product/$product->id")}}
                         @endslot
                     @endcomponent
-                    <?php $b++; if($b==3){ break;} ?>
+                    <?php $b++; if($b==4){ break;} ?>
+                </div>
                 @endforeach
             </div>
     </div>

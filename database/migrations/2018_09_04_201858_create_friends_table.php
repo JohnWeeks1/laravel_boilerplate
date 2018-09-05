@@ -4,7 +4,7 @@ use Illuminate\Support\Facades\Schema;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Database\Migrations\Migration;
 
-class CreateEventsTable extends Migration
+class CreateFriendsTable extends Migration
 {
     /**
      * Run the migrations.
@@ -13,13 +13,11 @@ class CreateEventsTable extends Migration
      */
     public function up()
     {
-        Schema::create('events', function (Blueprint $table) {
+        Schema::create('friends', function (Blueprint $table) {
             $table->increments('id');
-            $table->integer('user_id');
-            $table->string('name');
-            $table->text('description');
-            $table->string('path');
-            $table->dateTime('date_time');
+            $table->integer('user_requesting_friendship_id');
+            $table->integer('user_receiveing_friendship_id');
+            $table->integer('approved_or_not');
             $table->timestamps();
         });
     }
@@ -31,6 +29,6 @@ class CreateEventsTable extends Migration
      */
     public function down()
     {
-        Schema::dropIfExists('events');
+        Schema::dropIfExists('friends');
     }
 }

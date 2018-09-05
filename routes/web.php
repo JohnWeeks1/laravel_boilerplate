@@ -17,6 +17,12 @@ Route::get('/', 'HomeController@index');
 
 Route::get('/profile', 'ProfileController@index');
 
+Route::get('/profile_search', 'ProfileController@profile_search');
+
+Route::get('/send_friend_request/{id}', 'ProfileController@send_friend_request');
+
+Route::get('/profile_search_selected', 'ProfileController@profile_search_selected')->name('profile_search_selected');
+
 Route::get('/profile/{id}', 'ProfileController@profile_by_user_id');
 
 Route::post('/send_email', 'ProductController@send_email')->name('send_email');
@@ -44,6 +50,10 @@ Route::group(['prefix' => 'admin',  'middleware' => 'auth'], function(){
     Route::resource('/profile', 'UserController');
 
     Route::resource('/products', 'ProductController');
+
+    Route::get('/friends', 'UserController@friends');
+
+    Route::get('/unfriend/{id}', 'UserController@unfriend');
 
     Route::get('/dashboard', 'DashboardController@index');
 

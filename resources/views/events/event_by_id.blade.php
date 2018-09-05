@@ -34,6 +34,8 @@
                         <span class="float-left"><b>Creator:</b> <a href="/profile/{{$event->user->id}}">{{$event->user->name}}</a> </span>
                         <br>
                         <span class="float-left"> <b>Location:</b> {{$event->location->address}}</span>
+                        <br>
+                        <span class="float-left"> <b>Date:</b> {{date('M j, Y h:ia', strtotime($event->date_time))}}</span>
                         <br><br>
                         @if(Auth::check())
                                 @if(!$is_attending)
@@ -156,7 +158,7 @@
                                 <a href=""><img class="mx-auto rounded-circle img-fluid" src="/images/profile_pics/{{ $comment->user->path }}" alt="avatar" style="width:70px;"></a>
                             </div>
                             <div class="comment-content col-md-11 col-sm-9 col-9">
-                            <h6 class="small comment-meta"><a href="#">{{ $comment->user->name }}</a> {{ $comment->created_at }}</h6>
+                            <h6 class="small comment-meta"><a href="{{url('/profile/'.$comment->user->id)}}">{{ $comment->user->name }}</a> {{ $comment->created_at }}</h6>
                                 <div class="comment-body">
                                     <p>
                                         {{ $comment->comment }}

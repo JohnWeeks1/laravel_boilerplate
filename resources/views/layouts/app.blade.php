@@ -10,9 +10,9 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
     <script src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
-
     <!-- Scripts -->
     <script src="{{ asset('js/app.js') }}"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/js/select2.min.js"></script>
 
     <!-- Fonts -->
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
@@ -20,11 +20,12 @@
 
     <!-- Styles -->
     <link href="{{ asset('css/app.css') }}" rel="stylesheet">
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.6-rc.0/css/select2.min.css" rel="stylesheet" />
 </head>
 <body>
     <div id="app">
 
-        <nav class="navbar navbar-expand-md navbar-dark bg-dark" style="padding:20px;">
+        <nav class="navbar navbar-expand-md navbar-dark bg-primary" style="padding:20px;">
             <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">Laravel Boilerplate</a>
                     <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarsExample04" aria-controls="navbarsExample04" aria-expanded="false" aria-label="Toggle navigation">
@@ -94,6 +95,10 @@ $(function() {
           $('.send_whatsapp_message').attr("href", result);
         }
     });
+
+    $('.search-select').select2();
+
+
 });
 </script>
 </body>

@@ -40,6 +40,18 @@
                             <textarea id="description" name="description" class="form-control" placeholder="Pleae enter the description for you event" rows="4"></textarea>
                         </div>
                     </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="date">Date</label>
+                            <input type="date" id="date" name="date" class="form-control">
+                        </div>
+                    </div>
+                    <div class="col-md-6">
+                        <div class="form-group">
+                            <label for="time">Time <i>(24 hour)</i> </label>
+                            <input type="time" id="time" name="time" class="form-control">
+                        </div>
+                    </div>
                     <div class="col-md-12">
                         <div class="form-group">
                             <label for="image">Image</label>
