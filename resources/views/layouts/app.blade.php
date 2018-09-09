@@ -24,7 +24,6 @@
 </head>
 <body>
     <div id="app">
-
         <nav class="navbar navbar-expand-md navbar-dark bg-primary" style="padding:20px;">
             <div class="container">
                     <a class="navbar-brand" href="{{ url('/') }}">Laravel Boilerplate</a>
@@ -53,7 +52,8 @@
                         </ul>
                         <div class="navbar-nav">
                             <li class="nav-item dropdown">
-                                <a class="nav-link dropdown-toggle" href="https://example.com" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <a class="nav-link dropdown-toggle" href="" id="dropdown04" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                    <?php //DB::table('friends')->where()-get() ?>
                                     {{ Auth::check() ? Auth::user()->name : "Sign In" }}
                                 </a>
                                 <div class="dropdown-menu" aria-labelledby="dropdown04">

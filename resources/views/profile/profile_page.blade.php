@@ -19,6 +19,8 @@
                 <ul>
                     <li> <a href="" data-toggle="modal" data-target="#email">Email</a>  </li>
                     <li> <a href="" data-toggle="modal" data-target="#whatsapp">Whatsapp</a> </li>
+                    {{-- <li><span class="skype-button rectangle" data-contact-id="jonathanweeks007"></span>
+                        <script src="https://swc.cdn.skype.com/sdk/v1/sdk.min.js"></script></li> --}}
                     @if(url()->current() != url('profile'))
                         @if(empty($friend_request))
                             <li> <a href="{{ url('send_friend_request/'.$user->id)}}">Send Request</a> </li>
@@ -74,7 +76,7 @@
                         @endcomponent
                         {{-- END Whatsapp --}}
 
-                        @if(url()->current() == url('profile'))
+                        @if(url()->current() == url('/profile'))
                             <button type="button" class="btn btn-info btn-sm float-right" data-toggle="modal" data-target="#options">Options</button>
                         @endif
 

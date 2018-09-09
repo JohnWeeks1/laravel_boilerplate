@@ -97,6 +97,11 @@ class ProfileController extends Controller
 
     public function profile_by_user_id($id)
     {
+        //This is here so a user can't friend him or here self
+        if($id == Auth::user()->id) {
+            return redirect("/profile");
+        } 
+
         $user = User::find($id);
 
         $friend_request = 
@@ -138,4 +143,5 @@ class ProfileController extends Controller
 
         return redirect()->back()->with("success","Request sent!");
     }
+
 }

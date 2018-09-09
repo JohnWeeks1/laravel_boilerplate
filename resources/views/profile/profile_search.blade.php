@@ -56,7 +56,7 @@
                             </td>
                             <td>{{$user_by_id->name}}</td>
                             <td>
-                                <a href="profile/{{$user->id}}" class="btn btn-primary btn-sm">View Profile</a>
+                                <a href="profile/{{$user_by_id->id}}" class="btn btn-primary btn-sm">View Profile</a>
                             </td>
                         </tr>
                     @endif
