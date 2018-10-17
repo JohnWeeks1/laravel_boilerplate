@@ -25,6 +25,7 @@
     </a>
 </div> --}}
     <div class="container">
+        <p>TEST</p>
         <div class="row justify-content-start"> 
             <div class="card-columns">
                 @foreach($products as $product)
